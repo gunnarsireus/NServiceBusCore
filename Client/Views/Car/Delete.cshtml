@@ -1,0 +1,39 @@
+@using Shared.Models
+@model Shared.Models.Car
+
+@{
+    ViewData["Title"] = "Ta bort";
+}
+
+<h2>Ta bort</h2>
+
+<h3>Vill du verkligen ta bort denna bil?</h3>
+<div>
+    <hr/>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.VIN)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VIN)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RegNr)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RegNr)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreationTime)
+        </dd>
+    </dl>
+    @{var listString = "Index/" + Model.CompanyId; }
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id"/>
+        <input type="submit" value="Ta bort" class="btn btn-default"/> |
+        <a asp-action="@listString">Tillbaka till listan</a>
+    </form>
+</div>

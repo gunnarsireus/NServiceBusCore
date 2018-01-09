@@ -1,0 +1,59 @@
+@model Shared.Models.CompanyViewModel.CompanyViewModel
+
+@{
+    ViewData["Title"] = Html.Raw("F&#246;retag");
+}
+
+<h2>F&#246;retag</h2>
+
+<p>
+    <a asp-action="Create">Skapa nytt f&ouml;retag</a>
+</p>
+<div class="row">
+    <div class="col-lg-8">
+        <table class="table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Companies[0].Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Companies[0].Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Companies[0].CreationTime)
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Companies)
+            {
+                <tr>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreationTime)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">&#196;ndra</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Ta bort</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-4">
+        <p class="alert-info">H&auml;r visas alla f&ouml;retag registerade i databasen. Du kan ocks&aring; skapa nya f&ouml;retag samt ta bort f&ouml;retag. F&ouml;r att se vilka fordon som tillh&ouml;r vilket f&ouml;retag, g&aring; till F&ouml;retagsfordon.</p>
+    </div>
+</div>

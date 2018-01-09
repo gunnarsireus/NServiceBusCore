@@ -1,0 +1,84 @@
+@using System.Security.Principal
+@model Shared.Models.CarViewModel.CarListViewModel
+@{
+    ViewData["Title"] = Html.Raw("F&#246;retagsfordon");
+}
+<h2>F&#246;retagsfordon</h2>
+
+<script type="text/javascript">
+    function ShowCars() {
+        window.location = "/Car/Index/" + $('#CarsForCompany').val();
+    }
+</script>
+@{
+    if (ViewBag.CompanyId != null)
+    {
+        <table>
+            <tr class="page-header">Fordon f&#246;r f&#246;retag:</tr>
+            <tr>
+                <td>
+                    @Html.DropDownList("CarsForCompany", Model.CompanySelectList, new { onchange = "ShowCars()" })
+                </td>
+            </tr>
+        </table>
+        <p>
+            <a asp-action="Create" asp-route-id="@ViewBag.CompanyId">Skapa nytt fordon</a>
+        </p>
+    }
+    else
+    {
+        <p>F&#246;retag saknas</p>
+    }
+}
+<div class="row">
+    <div class="col-lg-8">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cars[0].VIN)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cars[0].RegNr)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cars[0].CreationTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cars[0].Online)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Cars)
+                {
+                    var iidd = item.Id + "_2";
+
+                    <tr id="@iidd">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VIN)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RegNr)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreationTime)
+                        </td>
+                        @{ var cl = item.Online ? "" : "alert-danger";}
+                        <td class="@cl">
+                            @Html.DisplayFor(modelItem => item.OnlineOrOffline)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">&#196;ndra</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Ta bort</a>
+                        </td>
+                    </tr>  }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-4">
+        <p class="alert-info">H&auml;r visas alla fordon f&ouml;r ett visst f&ouml;retag. I rullgardinsmenyn kan du v&auml;lja ett annat f&ouml;retag och se dess fordon. Notera hur status &auml;ndras slumpm&auml;ssigt ungef&auml;r var 10e sekund.<br /><br />Om du trycker F12 och v&auml;ljer "Console" kan du se n&auml;r status  &auml;ndras f&ouml;r respektive bil med hj&auml;lp av Javascript i browsern.</p>
+    </div>
+</div>

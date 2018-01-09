@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Shared.Models.HomeViewModel;
+using Shared.Models;
+using NServiceBus;
+
+
+namespace Client.Controllers
+{
+	public class HomeController : Controller
+	{
+		readonly IEndpointInstance _endpoint;
+		public HomeController(IEndpointInstance endpoint)
+		{
+			_endpoint = endpoint;
+		}
+
+		public async Task<IActionResult> Index()
+		{
+			List<Company> companies;
+			try
+			{
+				var responseTask = await Utils.Utils.GetCompaniesResponseAsync();
+				companies = responseTask.Companies;
+			}
+			catch (Exception e)
+			{
+				TempData["CustomError"] = "Ingen kontakt med servern! CarAPI måste startas innan Client kan köras!";
+				return View("Index", new HomeViewModel(Guid.NewGuid()) { Companies = new List<Company>() });
+			}
+
+			var getCarsResponse = await Utils.Utils.GetCarsResponseAsync();
+			var allCars = getCarsResponse.Cars.ToList();
+			foreach (var car in allCars)
+			{
+				car.Disabled = false; //Enable updates of Online/Offline
+				var updateCarResponse = Utils.Utils.UpdateCarResponseAsync(car);
+			}
+
+			foreach (var company in companies)
+			{
+				var companyCars = allCars.Where(o => o.CompanyId == company.Id).ToList();
+				company.Cars = companyCars;
+			}
+			var homeViewModel = new HomeViewModel(Guid.NewGuid()) { Companies = companies };
+			return View("Index", homeViewModel);
+		}
+
+		public IActionResult Error()
+		{
+			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+		}
+	}
+}

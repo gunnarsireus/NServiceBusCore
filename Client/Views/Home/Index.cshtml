@@ -1,0 +1,87 @@
+@model Shared.Models.HomeViewModel.HomeViewModel
+@{
+    ViewData["Title"] = "Alla Fordon";
+}
+
+
+@{
+    if (TempData["CustomError"] != null)
+    {
+        <h2>@TempData["CustomError"]</h2>
+    }
+    else
+    {
+        <h2>Alla Fordon</h2>
+    }
+    if (!Model.Companies.Any())
+    {
+        <p>F&#246;retag saknas</p>
+    }
+}
+
+<div class="row">
+    <div class="col-lg-4">
+        <table class="table" style="max-width:300px;" id="cars">
+            @for (var i = 0; i < Model.Companies.Count; i++)
+            {
+                var cars = Model.Companies[i].Cars.ToList();
+                <thead>
+                    <tr>
+                        <th colspan="3">
+                            @Html.DisplayFor(model => model.Companies[i].Name) <br />
+                            @Html.DisplayFor(model => model.Companies[i].Address)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @for (var j = 0; j < cars.Count; j++)
+                    {
+                        if (j == 0)
+                        {
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => cars[j].VIN)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => cars[j].RegNr)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => cars[j].Online)
+                                </th>
+                            </tr>
+}
+                        <tr id="@cars[j].Id">
+                            <td>
+                                @Html.DisplayFor(model => cars[j].VIN)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => cars[j].RegNr)
+                            </td>
+                            @{ var cl = cars[j].Online ? "" : "alert-danger";}
+                            <td class="@cl">
+                                @Html.DisplayFor(model => cars[j].OnlineOrOffline)
+                            </td>
+                        </tr> if (j == cars.Count - 1)
+                                {
+                                    <tr><td colspan="3"></td></tr>}
+                                }
+
+                </tbody>      }
+        </table>
+    </div>
+    <div class="col-lg-2">
+        <h3>Visa fordon med status:</h3>
+        <input onclick="doFiltering()"  id="Alla"  type="radio" name="status" value="Alla"  checked="checked">Alla<br>
+        <input onclick="doFiltering()" id="Online" type="radio" name="status" value="Online">Online<br>
+        <input onclick="doFiltering()" id="Offline" type="radio" name="status" value="Offline">Offline<br>
+        <br>
+        <br>
+        <button onclick="showModals()">Visa meddelandek&ouml;er</button>
+    </div>
+    <div class="col-lg-4">
+        <p class="alert-info">H&auml;r visas alla fordon f&ouml;r alla f&ouml;retag. Status (Offline/Online)  &auml;ndras slumpm&auml;ssigt ungef&auml;r var 10e sekund och kan ocks&aring;  &auml;ndras manuellt av en inloggad anv&auml;ndare. Du m&aring;ste registera ett konto och logga in f&ouml;r att kunna uppdatera f&ouml;retag och f&ouml;retagsfordon.  F&ouml;r att se och uppdatera f&ouml;retag och f&ouml;retagsfordon, logga in och v&auml;lj respektive menyalternativ.  Notera hur status &auml;ndras slumpm&auml;ssigt ungef&auml;r var 10e sekund.<br/><br/>Om du trycker F12 och v&auml;ljer "Console" kan du se n&auml;r status  &auml;ndras f&ouml;r respektive bil med hj&auml;lp av Javascript i browsern.</p>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>

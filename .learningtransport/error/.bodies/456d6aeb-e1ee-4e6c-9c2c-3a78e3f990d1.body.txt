@@ -1,0 +1,1 @@
+<?xml version="1.0"?><GetAspNetDbResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://tempuri.net/Shared.Response"><DataId>fb23117a-603d-4931-b67f-e6798af1dd59</DataId><AspNetDb>C:\Users\konguns\Documents\GitHub\NBusMVC\Server\App_Data\AspNet.db</AspNetDb></GetAspNetDbResponse>
