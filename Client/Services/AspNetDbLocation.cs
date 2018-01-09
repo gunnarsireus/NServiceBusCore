@@ -12,7 +12,7 @@ namespace Client.Services
 	    {
 		    var message = new GetAspNetDbRequest();
 		    var sendOptions = new SendOptions();
-		    sendOptions.SetDestination("Samples.Mvc.Server");
+		    sendOptions.SetDestination("NServiceBusCore.Server");
 		    var endpointInstance = Startup.EndpointInstance;
 		    var responseTask = await endpointInstance
 			    .Request<GetAspNetDbResponse>(message, sendOptions);

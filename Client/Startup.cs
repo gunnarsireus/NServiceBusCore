@@ -8,43 +8,38 @@ using Client.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Shared.Models;
-using Shared.Response;
+using System;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Client
 {
-	using System;
-	using System.IO;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-
-
 	public class Startup
-    {
-	    public Startup(IHostingEnvironment env)
-	    {
+	{
+		public Startup(IHostingEnvironment env)
+		{
 			var builder = new ConfigurationBuilder()
-			    .SetBasePath(env.ContentRootPath)
-			    .AddEnvironmentVariables();
-		    Configuration = builder.Build();
-	    }
+				.SetBasePath(env.ContentRootPath)
+				.AddEnvironmentVariables();
+			builder.Build();
+		}
 
-	    IConfigurationRoot Configuration { get; }
-	    public static IEndpointInstance EndpointInstance { get; set; }
+		public static IEndpointInstance EndpointInstance { get; private set; }
 
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
-        {
-	        var endpointConfiguration = new EndpointConfiguration("Samples.Mvc.WebApplication");
-	        var transport = endpointConfiguration.UseTransport<LearningTransport>();
-	        endpointConfiguration.UsePersistence<LearningPersistence>();
-	        endpointConfiguration.MakeInstanceUniquelyAddressable("1");
+		{
+			var endpointConfiguration = new EndpointConfiguration("NServiceBusCore.Client");
+			var transport = endpointConfiguration.UseTransport<LearningTransport>();
+			endpointConfiguration.UsePersistence<LearningPersistence>();
+			endpointConfiguration.MakeInstanceUniquelyAddressable("1");
 			endpointConfiguration.EnableCallbacks();
 
 			EndpointInstance = Endpoint.Start(endpointConfiguration).GetAwaiter().GetResult();
 
-			//services.AddSingleton<IMessageSession>(endpointInstance);
-	        services.AddSingleton(EndpointInstance);
+			services.AddSingleton(EndpointInstance);
 
 			services.AddIdentity<ApplicationUser, IdentityRole>()
 				.AddEntityFrameworkStores<ApplicationDbContext>()
@@ -55,62 +50,62 @@ namespace Client
 
 			services.AddMvc();
 
-	        var task = ConfigureServicesAsync(services);
+			var task = ConfigureServicesAsync(services);
 
-	        task.Wait();
+			task.Wait();
 
 		}
 
-	    public async Task ConfigureServicesAsync(IServiceCollection services)
-	    {
-		    string aspNetDb = null;
-		    var aspNetDbLocation = new AspNetDbLocation();
-		    try
-		    {
-			    var getAspNetDb = await aspNetDbLocation.GetAspNetDbAsync();
-			    aspNetDb = getAspNetDb.AspNetDb;
-		    }
-		    catch (Exception e)
-		    {
-			    //Do nothing
-		    }
-		    if (aspNetDb != null)
-		    {
-			    services.AddDbContext<ApplicationDbContext>(options =>
-				    options.UseSqlite("Data Source=" + aspNetDb));
-		    }
-		    else
-		    {
-			    services.AddDbContext<ApplicationDbContext>(options =>
-				    options.UseSqlite("Data Source=" + Directory.GetCurrentDirectory() + "\\App_Data\\AspNet.db"));
-		    }
-	    }
+		async Task ConfigureServicesAsync(IServiceCollection services)
+		{
+			string aspNetDb = null;
+			var aspNetDbLocation = new AspNetDbLocation();
+			try
+			{
+				var getAspNetDb = await aspNetDbLocation.GetAspNetDbAsync();
+				aspNetDb = getAspNetDb.AspNetDb;
+			}
+			catch (Exception e)
+			{
+				//Do nothing
+			}
+			if (aspNetDb != null)
+			{
+				services.AddDbContext<ApplicationDbContext>(options =>
+					options.UseSqlite("Data Source=" + aspNetDb));
+			}
+			else
+			{
+				services.AddDbContext<ApplicationDbContext>(options =>
+					options.UseSqlite("Data Source=" + Directory.GetCurrentDirectory() + "\\App_Data\\AspNet.db"));
+			}
+		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
-	        loggerFactory.AddDebug();
-	        if (env.IsDevelopment())
-	        {
-		        app.UseDeveloperExceptionPage();
-		        app.UseBrowserLink();
-		        app.UseDatabaseErrorPage();
-	        }
-	        else
-	        {
-		        app.UseExceptionHandler("/Home/Error");
-	        }
+		{
+			loggerFactory.AddDebug();
+			if (env.IsDevelopment())
+			{
+				app.UseDeveloperExceptionPage();
+				app.UseBrowserLink();
+				app.UseDatabaseErrorPage();
+			}
+			else
+			{
+				app.UseExceptionHandler("/Home/Error");
+			}
 
-	        app.UseStaticFiles();
+			app.UseStaticFiles();
 
-	        app.UseAuthentication();
+			app.UseAuthentication();
 
-	        app.UseMvc(routes =>
-	        {
-		        routes.MapRoute(
-			        "default",
-			        "{controller=Home}/{action=Index}/{id?}");
-	        });
+			app.UseMvc(routes =>
+			{
+				routes.MapRoute(
+					"default",
+					"{controller=Home}/{action=Index}/{id?}");
+			});
 		}
-    }
+	}
 }

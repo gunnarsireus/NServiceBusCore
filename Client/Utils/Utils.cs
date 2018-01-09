@@ -16,7 +16,7 @@ namespace Client.Utils
 	    {
 		    var message = new GetCompaniesRequest();
 		    var sendOptions = new SendOptions();
-		    sendOptions.SetDestination("Samples.Mvc.Server");
+		    sendOptions.SetDestination("NServiceBusCore.Server");
 		    var endpointInstance = Startup.EndpointInstance;
 		    var responseTask = endpointInstance
 			    .Request<GetCompaniesResponse>(message, sendOptions);
@@ -27,7 +27,7 @@ namespace Client.Utils
 	    {
 		    var message = new GetCompanyRequest(id);
 		    var sendOptions = new SendOptions();
-		    sendOptions.SetDestination("Samples.Mvc.Server");
+		    sendOptions.SetDestination("NServiceBusCore.Server");
 		    var endpointInstance = Startup.EndpointInstance;
 		    var responseTask = endpointInstance
 			    .Request<GetCompanyResponse>(message, sendOptions);
@@ -39,7 +39,7 @@ namespace Client.Utils
 	    {
 		    var message = new CreateCarRequest(car);
 		    var sendOptions = new SendOptions();
-		    sendOptions.SetDestination("Samples.Mvc.Server");
+		    sendOptions.SetDestination("NServiceBusCore.Server");
 		    var endpointInstance = Startup.EndpointInstance;
 		    var responseTask = endpointInstance
 			    .Request<CreateCarResponse>(message, sendOptions);
@@ -50,7 +50,7 @@ namespace Client.Utils
 	    {
 		    var message = new GetCarRequest(id);
 		    var sendOptions = new SendOptions();
-		    sendOptions.SetDestination("Samples.Mvc.Server");
+		    sendOptions.SetDestination("NServiceBusCore.Server");
 		    var endpointInstance = Startup.EndpointInstance;
 		    var responseTask = endpointInstance
 			    .Request<GetCarResponse>(message, sendOptions);
@@ -61,7 +61,7 @@ namespace Client.Utils
 	    {
 		    var message = new DeleteCarRequest(id);
 		    var sendOptions = new SendOptions();
-		    sendOptions.SetDestination("Samples.Mvc.Server");
+		    sendOptions.SetDestination("NServiceBusCore.Server");
 		    var endpointInstance = Startup.EndpointInstance;
 		    var responseTask = endpointInstance
 			    .Request<DeleteCarResponse>(message, sendOptions);
@@ -72,7 +72,7 @@ namespace Client.Utils
 	    {
 		    var message = new UpdateCarRequest(car);
 		    var sendOptions = new SendOptions();
-		    sendOptions.SetDestination("Samples.Mvc.Server");
+		    sendOptions.SetDestination("NServiceBusCore.Server");
 		    var endpointInstance = Startup.EndpointInstance;
 		    var responseTask = endpointInstance
 			    .Request<UpdateCarResponse>(message, sendOptions);
@@ -83,7 +83,7 @@ namespace Client.Utils
 	    {
 		    var message = new GetCarsRequest();
 		    var sendOptions = new SendOptions();
-		    sendOptions.SetDestination("Samples.Mvc.Server");
+		    sendOptions.SetDestination("NServiceBusCore.Server");
 		    var endpointInstance = Startup.EndpointInstance;
 		    var responseTask = endpointInstance
 			    .Request<GetCarsResponse>(message, sendOptions);
@@ -100,7 +100,7 @@ namespace Client.Utils
 	    {
 		    var message = new CreateCompanyRequest(company);
 		    var sendOptions = new SendOptions();
-		    sendOptions.SetDestination("Samples.Mvc.Server");
+		    sendOptions.SetDestination("NServiceBusCore.Server");
 		    var endpointInstance = Startup.EndpointInstance;
 		    var responseTask = endpointInstance
 			    .Request<CreateCompanyResponse>(message, sendOptions);
@@ -111,7 +111,7 @@ namespace Client.Utils
 	    {
 		    var message = new DeleteCompanyRequest(id);
 		    var sendOptions = new SendOptions();
-		    sendOptions.SetDestination("Samples.Mvc.Server");
+		    sendOptions.SetDestination("NServiceBusCore.Server");
 		    var endpointInstance = Startup.EndpointInstance;
 		    var responseTask = endpointInstance
 			    .Request<DeleteCompanyResponse>(message, sendOptions);
@@ -122,7 +122,7 @@ namespace Client.Utils
 	    {
 		    var message = new UpdateCompanyRequest(company);
 		    var sendOptions = new SendOptions();
-		    sendOptions.SetDestination("Samples.Mvc.Server");
+		    sendOptions.SetDestination("NServiceBusCore.Server");
 		    var endpointInstance = Startup.EndpointInstance;
 		    var responseTask = endpointInstance
 			    .Request<UpdateCompanyResponse>(message, sendOptions);
