@@ -33,12 +33,11 @@ namespace Client.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Update(Guid id, [Bind("Id, Online")] Car car)
+		public async Task<IActionResult> UpdateOnline([FromBody] Car car)
 		{
 			if (!ModelState.IsValid) return Json(new { success = false });
 			var getCarResponse = await Utils.Utils.GetCarResponseAsync(car.Id);
 			var oldCar = getCarResponse.Car;
-			if (oldCar == null) return Json(new { success = false });
 			oldCar.Online = car.Online;
 			await Utils.Utils.UpdateCarResponseAsync(oldCar);
 			return Json(new { success = true });

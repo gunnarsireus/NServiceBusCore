@@ -34,7 +34,7 @@ function timerJob() {
             }
             selectedCar.online = !selectedCar.online;
             $.ajax({
-                url: 'http://localhost:51863/car/update/' + selectedCar.id,
+                url: 'http://localhost:51863/car/updateonline',
                 contentType: "application/json",
                 type: "POST",
                 data: JSON.stringify(selectedCar),
