@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Shared.Models;
-using Server.DAL;
 
 namespace Server.DAL
 {

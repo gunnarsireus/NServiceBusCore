@@ -17,7 +17,7 @@ function timerJob() {
     const tenSeconds = 10000;
     const oneSecond = 1000;
     $.ajax({
-        url: "http://localhost:54411/api/car",
+        url: "http://localhost:51863/car/getallcars",
         type: "GET",
         dataType: "json",
         success: function (cars) {
@@ -34,11 +34,17 @@ function timerJob() {
             }
             selectedCar.online = !selectedCar.online;
             $.ajax({
-                url: 'http://localhost:54411/api/car/' + selectedCar.id,
+                url: 'http://localhost:51863/car/update/' + selectedCar.id,
                 contentType: "application/json",
-                type: "PUT",
+                type: "POST",
                 data: JSON.stringify(selectedCar),
-                dataType: "json"
+                dataType: "json",
+                success:function(response) {
+
+                },
+                error:function(error) {
+
+                }
             });
 
             const selector = `#${selectedCar.id} td:eq(2)`;

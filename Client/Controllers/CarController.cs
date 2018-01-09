@@ -11,6 +11,7 @@ using Shared.Models.CarViewModel;
 
 namespace Client.Controllers
 {
+	using Microsoft.AspNetCore.Cors;
 
 	public class CarController : Controller
 	{
@@ -21,6 +22,26 @@ namespace Client.Controllers
 		{
 			_userManager = userManager;
 			_endpoint = endpoint;
+		}
+
+		[HttpGet]
+		[EnableCors("AllowAllOrigins")]
+		public async Task<IActionResult> GetAllCars()
+		{
+			var getCarsResponse = await Utils.Utils.GetCarsResponseAsync();
+			return Json(getCarsResponse.Cars);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Update(Guid id, [Bind("Id, Online")] Car car)
+		{
+			if (!ModelState.IsValid) return Json(new { success = false });
+			var getCarResponse = await Utils.Utils.GetCarResponseAsync(car.Id);
+			var oldCar = getCarResponse.Car;
+			if (oldCar == null) return Json(new { success = false });
+			oldCar.Online = car.Online;
+			await Utils.Utils.UpdateCarResponseAsync(oldCar);
+			return Json(new { success = true });
 		}
 
 		// GET: Car

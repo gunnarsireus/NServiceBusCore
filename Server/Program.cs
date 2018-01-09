@@ -1,20 +1,23 @@
 ﻿using System.Globalization;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Server
 {
+	using System.IO;
+
 	class Program
     {
-	    public static void Main(string[] args)
+	    public static void Main()
 	    {
 		    CultureInfo.CurrentUICulture = new CultureInfo("en-US");
-			BuildWebHost(args).RunAsync().GetAwaiter().GetResult();
-	    }
-
-	    static IWebHost BuildWebHost(string[] args) =>
-		    WebHost.CreateDefaultBuilder(args)
+		    var host = new WebHostBuilder()
+			    .UseKestrel()
+			    .UseContentRoot(Directory.GetCurrentDirectory())
+			    .UseIISIntegration()
 			    .UseStartup<Startup>()
 			    .Build();
+
+		    host.Run();
+		}
 	}
 }
