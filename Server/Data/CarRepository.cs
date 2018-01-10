@@ -2,9 +2,11 @@
 using Server.DAL;
 namespace Server.Data
 {
+	using Microsoft.EntityFrameworkCore;
+
 	public class CarRepository : Repository<Car>, ICarRepository
 	{
-		public CarRepository(CarApiContext context) : base(context)
+		public CarRepository(DbContext context) : base(context)
 		{
 		}
 

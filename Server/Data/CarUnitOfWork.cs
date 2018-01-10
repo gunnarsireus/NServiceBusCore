@@ -6,7 +6,7 @@ namespace Server.Data
 
 	public class CarUnitOfWork:ICarUnitOfWork
     {
-	    private readonly CarApiContext _context;
+	    readonly CarApiContext _context;
 
 	    public CarUnitOfWork(CarApiContext context)
 	    {

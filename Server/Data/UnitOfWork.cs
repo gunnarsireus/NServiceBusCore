@@ -16,14 +16,19 @@
 
 	    public void Dispose()
 	    {
-		   _context.Dispose();
+		   Context.Dispose();
 	    }
 
 	    public ICarRepository Cars { get; private set; }
 	    public ICompanyRepository Companies { get; private set; }
+
+		public CarApiContext Context => Context1;
+
+		public CarApiContext Context1 => _context;
+
 		public int Complete()
 		{
-			return _context.SaveChanges();
+			return Context.SaveChanges();
 		}
     }
 }
