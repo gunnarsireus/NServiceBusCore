@@ -1,0 +1,1 @@
+<?xml version="1.0"?><GetCarResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://tempuri.net/Shared.Response"><DataId>444db1d0-7778-4a3e-9fde-6369198a7498</DataId></GetCarResponse>

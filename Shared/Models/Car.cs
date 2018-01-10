@@ -14,11 +14,8 @@ namespace Shared.Models
 			Online = true;
 		}
 
-		public Car(Guid companyId)
+		public Car(Guid companyId):this()
 		{
-			Id = Guid.NewGuid();
-			CreationTime = DateTime.Now.ToString(new CultureInfo("se-SE"));
-			Online = true;
 			CompanyId = companyId;
 		}
 		public Guid Id { get; set; }

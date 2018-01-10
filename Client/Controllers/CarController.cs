@@ -144,11 +144,12 @@ namespace Client.Controllers
 		{
 			if (!ModelState.IsValid) return View(car);
 			var oldCarResponse = await Utils.Utils.GetCarResponseAsync(id);
-			oldCarResponse.Car.Online = car.Online;
-			oldCarResponse.Car.Disabled = false; //Enable updates of Online/Offline when editing done
-			await Utils.Utils.UpdateCarResponseAsync(car);
+			var oldCar = oldCarResponse.Car;
+			oldCar.Online = car.Online;
+			oldCar.Disabled = false; //Enable updates of Online/Offline when editing done
+			var updateCarResponse = Utils.Utils.UpdateCarResponseAsync(oldCar);
 
-			return RedirectToAction("Index", new { id = car.CompanyId });
+			return RedirectToAction("Index", new { id = oldCar.CompanyId });
 		}
 
 		// GET: Car/Delete/5

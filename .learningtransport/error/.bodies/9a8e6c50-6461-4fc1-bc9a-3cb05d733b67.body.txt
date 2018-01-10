@@ -1,1 +1,0 @@
-<?xml version="1.0"?><GetCompaniesRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://tempuri.net/Shared.Requests"><DataId>bd60bcd3-e8ee-418a-a776-25a0c77e4791</DataId></GetCompaniesRequest>

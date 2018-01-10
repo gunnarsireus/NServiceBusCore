@@ -1,1 +1,0 @@
-<?xml version="1.0"?><GetCarsRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://tempuri.net/NBusShared.Requests"><DataId>91fdaee1-e41a-4bb6-af6d-13de5a5dd94e</DataId></GetCarsRequest>

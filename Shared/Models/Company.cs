@@ -12,6 +12,10 @@ namespace Shared.Models
 		{
 			CreationTime = DateTime.Now.ToString(new CultureInfo("se-SE"));
 		}
+		public Company(Guid id):this()
+		{
+			Id = id;
+		}
 		public Guid Id { get; set; }
 
 		[Display(Name = "Skapat datum")]

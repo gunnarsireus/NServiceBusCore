@@ -13,9 +13,8 @@ namespace Server.DAL
 			if (!context.Cars.Any() || !context.Companies.Any())
 			{
 				var companyId = Guid.NewGuid();
-				context.Companies.Add(new Company()
+				context.Companies.Add(new Company(companyId)
 				{
-					Id = companyId,
 					Name = "Kalles Grustransporter AB",
 					Address = "Cementvägen 8, 111 11 Södertälje"
 				});
@@ -36,7 +35,7 @@ namespace Server.DAL
 				});
 
 				companyId = Guid.NewGuid();
-				context.Companies.Add(new Company() { Id = companyId, Name = "Johans Bulk AB", Address = "Balkvägen 12, 222 22 Stockholm" });
+				context.Companies.Add(new Company(companyId) { Name = "Johans Bulk AB", Address = "Balkvägen 12, 222 22 Stockholm" });
 				context.Cars.Add(new Car(companyId)
 				{
 					VIN = "YS2R4X20005388011",
@@ -49,7 +48,7 @@ namespace Server.DAL
 				});
 
 				companyId = Guid.NewGuid();
-				context.Companies.Add(new Company() { Id = companyId, Name = "Haralds Värdetransporter AB", Address = "Budgetvägen 1, 333 33 Uppsala" });
+				context.Companies.Add(new Company(companyId) { Name = "Haralds Värdetransporter AB", Address = "Budgetvägen 1, 333 33 Uppsala" });
 				context.Cars.Add(new Car(companyId)
 				{
 					VIN = "YS2R4X20005387765",
