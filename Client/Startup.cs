@@ -7,7 +7,7 @@ using Client.Data;
 using Client.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Shared.Models;
+using Client.Models;
 using System;
 using System.IO;
 using System.Threading.Tasks;

@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using Shared.Models;
 
-namespace Shared.Models.HomeViewModel
+namespace Client.Models.HomeViewModel
 {
-	using System;
-	using Shared.Models;
-
 	public class HomeViewModel : Car
     {
 	    public HomeViewModel(Guid companyId) : base(companyId)

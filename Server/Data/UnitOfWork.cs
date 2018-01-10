@@ -1,6 +1,4 @@
-﻿using Server.DAL;
-
-namespace Server.Data
+﻿namespace Server.Data
 {
 	using Server.DAL;
 

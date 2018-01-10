@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Client.Services;
-using Shared.Models;
-using Shared.Models.ManageViewModels;
+using Client.Models;
+using Client.Models.ManageViewModels;
 
 namespace CarClient.Controllers
 {

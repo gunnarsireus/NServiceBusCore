@@ -2,14 +2,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 using NServiceBus;
-using Shared.Models;
 using Shared.Requests;
 using Shared.Response;
-
+using Shared.Models;
 
 namespace Client.Utils
 {
-
 	public class Utils
     {
 	    public static Task<GetCompaniesResponse> GetCompaniesResponseAsync()

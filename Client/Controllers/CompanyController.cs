@@ -3,8 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Client.Models;
+using Client.Models.CompanyViewModel;
 using Shared.Models;
-using Shared.Models.CompanyViewModel;
 
 namespace CarClient.Controllers
 {

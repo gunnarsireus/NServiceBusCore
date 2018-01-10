@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Shared.Models;
+using Client.Models;
 using NServiceBus;
-using Shared.Models.CarViewModel;
+using Client.Models.CarViewModel;
+using Microsoft.AspNetCore.Cors;
+using Shared.Models;
 
 namespace Client.Controllers
 {
-	using Microsoft.AspNetCore.Cors;
 
 	public class CarController : Controller
 	{

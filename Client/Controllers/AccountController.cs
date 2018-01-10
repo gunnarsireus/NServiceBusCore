@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Client.Services;
-using Shared.Models;
-using Shared.Models.AccountViewModels;
+using Client.Models;
+using Client.Models.AccountViewModels;
 
 namespace Client.Controllers
 {

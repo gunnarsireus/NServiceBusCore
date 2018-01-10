@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Shared.Models.AccountViewModels
+namespace Client.Models.AccountViewModels
 {
     public class LoginWithRecoveryCodeViewModel
     {

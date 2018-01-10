@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Shared.Models;
+using Client.Models;
 
 namespace Client.Data
 {
-	using Shared.Models;
+	using Client.Models;
 
 	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

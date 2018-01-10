@@ -2,8 +2,10 @@
 using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Shared.Models.CarViewModel
+namespace Client.Models.CarViewModel
 {
+	using Shared.Models;
+
 	public class CarListViewModel : Car
     {
 		public CarListViewModel(Guid companyId) : base(companyId)

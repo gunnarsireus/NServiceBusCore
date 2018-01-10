@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Shared.Models;
 
-namespace Shared.Models.CompanyViewModel
+namespace Client.Models.CompanyViewModel
 {
 	public class CompanyViewModel
     {

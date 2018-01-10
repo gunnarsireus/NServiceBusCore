@@ -4,10 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models.HomeViewModel;
-using Shared.Models;
+using Client.Models.HomeViewModel;
+using Client.Models;
 using NServiceBus;
-
+using Shared.Models;
 
 namespace Client.Controllers
 {
