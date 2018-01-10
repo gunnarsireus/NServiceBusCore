@@ -1,14 +1,13 @@
 ﻿using System.Globalization;
 using Microsoft.AspNetCore.Hosting;
+using System;
+using System.IO;
+using Microsoft.EntityFrameworkCore;
+using NServiceBus;
+using Server.DAL;
 
 namespace Server
 {
-	using System;
-	using System.IO;
-	using Microsoft.EntityFrameworkCore;
-	using NServiceBus;
-	using Server.DAL;
-
 	class Program
 	{
 		public static void Main()
