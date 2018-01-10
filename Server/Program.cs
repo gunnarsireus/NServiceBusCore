@@ -1,28 +1,27 @@
-﻿using System.Globalization;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using NServiceBus;
 using Server.DAL;
+using System.Globalization;
+using Microsoft.AspNetCore;
 
 namespace Server
 {
 	class Program
 	{
-		public static void Main()
+		public static void Main(string[] args)
 		{
 			CultureInfo.CurrentUICulture = new CultureInfo("en-US");
-			var host = new WebHostBuilder()
-				.UseKestrel()
-				.UseContentRoot(Directory.GetCurrentDirectory())
-				.UseIISIntegration()
+			BuildWebHost(args).Run();
+		}
+
+		static IWebHost BuildWebHost(string[] args) =>
+			WebHost.CreateDefaultBuilder(args)
 				.UseDb("DataSource=App_Data/Car.db")
 				.Build();
-
-			host.Run();
-		}
 	}
+
 
 	public static class WebHostBuilderExtension
 	{

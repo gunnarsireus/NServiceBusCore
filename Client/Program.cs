@@ -1,23 +1,30 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using System.Globalization;
+using System.IO;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore;
 
 namespace Client
 {
-	using System.Globalization;
-	using System.IO;
-
 	public class Program
     {
-	    public static void Main()
+	    public static void Main(string[] args)
 	    {
 		    CultureInfo.CurrentUICulture = new CultureInfo("en-US");
-			var host = new WebHostBuilder()
-			    .UseKestrel()
-			    .UseContentRoot(Directory.GetCurrentDirectory())
-			    .UseIISIntegration()
+		    var builder = new ConfigurationBuilder()
+			    .SetBasePath(Directory.GetCurrentDirectory())
+			    .AddJsonFile("appsettings.json");
+
+		    builder.Build();
+
+		    BuildWebHost(args).Run();
+		}
+
+	    static IWebHost BuildWebHost(string[] args)
+	    {
+		    return WebHost.CreateDefaultBuilder(args)
 			    .UseStartup<Startup>()
 			    .Build();
-
-		    host.Run();
 	    }
 	}
 }
