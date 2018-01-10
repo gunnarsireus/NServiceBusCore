@@ -61,7 +61,7 @@ namespace Client.Controllers
 			{
 				new SelectListItem
 				{
-					Text = "Välj företag",
+					Text = "Choose company",
 					Value = ""
 				}
 			};

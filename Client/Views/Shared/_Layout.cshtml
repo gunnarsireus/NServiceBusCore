@@ -30,19 +30,18 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>
-                    <a asp-area="" asp-controller="Home" asp-action="Index">Alla Fordon</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Index">All Vehicles</a>
                 </li>
                 @inject SignInManager<ApplicationUser> SignInManager
                 @inject UserManager<ApplicationUser> UserManager
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <li>
-                        <a asp-area="" asp-controller="Company" asp-action="Index">F&#246;retag</a>
+                        <a asp-area="" asp-controller="Company" asp-action="Index">Companies</a>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="Car" asp-action="Index">F&#246;retagsfordon</a>
-                    </li>
-                }
+                        <a asp-area="" asp-controller="Car" asp-action="Index">Company Vehicles</a>
+                    </li>}
             </ul>
             @await Html.PartialAsync("_LoginPartial")
         </div>
@@ -52,7 +51,7 @@
     @RenderBody()
     <hr/>
     <footer>
-        <p>&copy; 2017 - F&#246;retagsfordon</p>
+        <p>&copy; 2017 - Company Vehicles</p>
     </footer>
 </div>
 

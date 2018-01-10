@@ -1,9 +1,9 @@
 @using System.Security.Principal
 @model Client.Models.CarViewModel.CarListViewModel
 @{
-    ViewData["Title"] = Html.Raw("F&#246;retagsfordon");
+    ViewData["Title"] = "Company Vehicles";
 }
-<h2>F&#246;retagsfordon</h2>
+<h2>Company Vehicles</h2>
 
 <script type="text/javascript">
     function ShowCars() {
@@ -14,7 +14,7 @@
     if (ViewBag.CompanyId != null)
     {
         <table>
-            <tr class="page-header">Fordon f&#246;r f&#246;retag:</tr>
+            <tr class="page-header">Fordon f&#246;r company:</tr>
             <tr>
                 <td>
                     @Html.DropDownList("CarsForCompany", Model.CompanySelectList, new { onchange = "ShowCars()" })
@@ -22,12 +22,12 @@
             </tr>
         </table>
         <p>
-            <a asp-action="Create" asp-route-id="@ViewBag.CompanyId">Skapa nytt fordon</a>
+            <a asp-action="Create" asp-route-id="@ViewBag.CompanyId">Create new fordon</a>
         </p>
     }
     else
     {
-        <p>F&#246;retag saknas</p>
+        <p>Companies missing</p>
     }
 }
 <div class="row">
@@ -70,15 +70,19 @@
                             @Html.DisplayFor(modelItem => item.OnlineOrOffline)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">&#196;ndra</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Ta bort</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                         </td>
                     </tr>  }
             </tbody>
         </table>
     </div>
     <div class="col-lg-4">
-        <p class="alert-info">H&auml;r visas alla fordon f&ouml;r ett visst f&ouml;retag. I rullgardinsmenyn kan du v&auml;lja ett annat f&ouml;retag och se dess fordon. Notera hur status &auml;ndras slumpm&auml;ssigt ungef&auml;r var 10e sekund.<br /><br />Om du trycker F12 och v&auml;ljer "Console" kan du se n&auml;r status  &auml;ndras f&ouml;r respektive bil med hj&auml;lp av Javascript i browsern.</p>
+        <p class="alert-info">
+            All vehicles for a particular company are shown here. In the drop-down menu, you can choose another company and see its vehicles. Note how the status changes randomly every 10 seconds.
+            <br /><br />
+            If you press F12 and select "Console" you can see when the status changes for each car using Javascript in the browser<br /><br />If you press F12 and select "Console" you can see when the status changes for each car using Javascript in the browser.
+        </p>
     </div>
 </div>

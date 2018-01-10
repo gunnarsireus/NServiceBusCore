@@ -18,12 +18,12 @@ namespace Shared.Models
 		}
 		public Guid Id { get; set; }
 
-		[Display(Name = "Skapat datum")]
+		[Display(Name = "Created date")]
 		public string CreationTime { get; set; }
-		[Display(Name = "Namn")]
+		[Display(Name = "Name")]
 		public string Name { get; set; }
 
-		[Display(Name = "Adress")]
+		[Display(Name = "Address")]
 		public string Address { get; set; }
 
 		public ICollection<Car> Cars { get; set; }

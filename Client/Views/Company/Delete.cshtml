@@ -1,12 +1,12 @@
 @model Shared.Models.Company
 
 @{
-    ViewData["Title"] = "Ta bort";
+    ViewData["Title"] = "Delete";
 }
 
-<h2>Ta bort</h2>
+<h2>Delete</h2>
 
-<h3>Vill du verkligen ta bort detta f&#246;retag?</h3>
+<h3>Do you really want to delete this company?</h3>
 <div>
     <hr/>
     <dl class="dl-horizontal">
@@ -32,7 +32,7 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id"/>
-        <input type="submit" value="Ta bort" class="btn btn-default"/> |
-        <a asp-action="Index">Tillbaka till listan</a>
+        <input type="submit" value="Delete" class="btn btn-default"/> |
+        <a asp-action="Index">Back to list</a>
     </form>
 </div>

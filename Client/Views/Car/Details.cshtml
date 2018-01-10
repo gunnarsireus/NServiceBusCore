@@ -5,7 +5,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Detaljer f&#246;r bil tillh&#246;rande @ViewBag.CompanyName</h2>
+<h2>Details for vehicle belonging to @ViewBag.CompanyName</h2>
 
 <div>
     <hr />
@@ -40,7 +40,7 @@
 <div>
     @{var listString = "Index/" + Model.CompanyId; }
     <p>
-        <a asp-action="Edit" asp-route-id="@Model.Id">&#196;ndra</a> |
-        <a asp-action="@listString">Tillbaka till listan</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+        <a asp-action="@listString">Back to list</a>
     </p>
 </div>

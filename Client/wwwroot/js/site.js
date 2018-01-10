@@ -29,7 +29,7 @@ function timerJob() {
             const selectedItem = Math.floor(Math.random() * cars.length);
             let selectedCar = cars[selectedItem];
             if (selectedCar.disabled === true) {
-                console.log(selectedCar.regNr + " är blockerad för uppdatering av Online/Offline!");
+                console.log(selectedCar.regNr + " is blocked for uppdating of Online/Offline!");
                 return;
             }
             selectedCar.online = !selectedCar.online;
@@ -68,7 +68,7 @@ function timerJob() {
                 $(selector3).addClass("alert-danger");
                 console.log(selectedCar.regNr + " är Offline!");
             }
-            if (document.getElementById("Alla") !== null) {
+            if (document.getElementById("All") !== null) {
                 doFiltering();
             }
         }
@@ -78,7 +78,7 @@ function timerJob() {
 
 function doFiltering() {
     let selection = 0;
-    let radiobtn = document.getElementById("Alla");
+    let radiobtn = document.getElementById("All");
     if (radiobtn.checked === false) {
         radiobtn = document.getElementById("Online");
         if (radiobtn.checked === true) {

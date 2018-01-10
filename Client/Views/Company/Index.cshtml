@@ -1,13 +1,13 @@
 @model Client.Models.CompanyViewModel.CompanyViewModel
 
 @{
-    ViewData["Title"] = Html.Raw("F&#246;retag");
+    ViewData["Title"] = "Company";
 }
 
-<h2>F&#246;retag</h2>
+<h2>Company</h2>
 
 <p>
-    <a asp-action="Create">Skapa nytt f&ouml;retag</a>
+    <a asp-action="Create">Create new company</a>
 </p>
 <div class="row">
     <div class="col-lg-8">
@@ -44,9 +44,9 @@
                         @Html.DisplayFor(modelItem => item.CreationTime)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">&#196;ndra</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Ta bort</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     </td>
                 </tr>
             }
@@ -54,6 +54,6 @@
         </table>
     </div>
     <div class="col-lg-4">
-        <p class="alert-info">H&auml;r visas alla f&ouml;retag registerade i databasen. Du kan ocks&aring; skapa nya f&ouml;retag samt ta bort f&ouml;retag. F&ouml;r att se vilka fordon som tillh&ouml;r vilket f&ouml;retag, g&aring; till F&ouml;retagsfordon.</p>
+        <p class="alert-info">All companies registered in the database are shown here. You can also create new companies as well as remove companies. To see which vehicle belong to a certain company, go to Company Vehicles.</p>
     </div>
 </div>

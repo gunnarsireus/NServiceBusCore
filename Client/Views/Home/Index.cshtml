@@ -1,6 +1,6 @@
 @model Client.Models.HomeViewModel.HomeViewModel
 @{
-    ViewData["Title"] = "Alla Fordon";
+    ViewData["Title"] = "All Vehicles";
 }
 
 
@@ -11,11 +11,11 @@
     }
     else
     {
-        <h2>Alla Fordon</h2>
+        <h2>All Vehicles</h2>
     }
     if (!Model.Companies.Any())
     {
-        <p>F&#246;retag saknas</p>
+        <p>Companies missing</p>
     }
 }
 
@@ -72,15 +72,19 @@
     </div>
     <div class="col-lg-2">
         <h3>Visa fordon med status:</h3>
-        <input onclick="doFiltering()"  id="Alla"  type="radio" name="status" value="Alla"  checked="checked">Alla<br>
+        <input onclick="doFiltering()"  id="All"  type="radio" name="status" value="All"  checked="checked">All<br>
         <input onclick="doFiltering()" id="Online" type="radio" name="status" value="Online">Online<br>
         <input onclick="doFiltering()" id="Offline" type="radio" name="status" value="Offline">Offline<br>
         <br>
         <br>
-        <button onclick="showModals()">Visa meddelandek&ouml;er</button>
+        <button onclick="showModals()">Show message queues</button>
     </div>
     <div class="col-lg-4">
-        <p class="alert-info">H&auml;r visas alla fordon f&ouml;r alla f&ouml;retag. Status (Offline/Online)  &auml;ndras slumpm&auml;ssigt ungef&auml;r var 10e sekund och kan ocks&aring;  &auml;ndras manuellt av en inloggad anv&auml;ndare. Du m&aring;ste registera ett konto och logga in f&ouml;r att kunna uppdatera f&ouml;retag och f&ouml;retagsfordon.  F&ouml;r att se och uppdatera f&ouml;retag och f&ouml;retagsfordon, logga in och v&auml;lj respektive menyalternativ.  Notera hur status &auml;ndras slumpm&auml;ssigt ungef&auml;r var 10e sekund.<br/><br/>Om du trycker F12 och v&auml;ljer "Console" kan du se n&auml;r status  &auml;ndras f&ouml;r respektive bil med hj&auml;lp av Javascript i browsern.</p>
+        <p class="alert-info">
+            All vehicles for all companies are shown here. Status (Offline/Online) randomly changes approximately every 10 seconds. A logged in user can manually change the status. To view and update vehicles and companies, create an account, log in and select the respective menu options.
+            <br /><br />
+            If you press F12 and select "Console" you can see when the status changes for each car using Javascript in the browser.
+        </p>
     </div>
     <div class="col-lg-2">
     </div>
