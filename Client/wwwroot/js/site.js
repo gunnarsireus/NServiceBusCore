@@ -57,7 +57,7 @@ function timerJob() {
                 $(selector2).removeClass("alert-danger");
                 $(selector3).text("Online");
                 $(selector3).removeClass("alert-danger");
-                console.log(selectedCar.regNr + " är Online!");
+                console.log(selectedCar.regNr + " is Online!");
             }
             else {
                 $(selector).text("Offline");
@@ -66,7 +66,7 @@ function timerJob() {
                 $(selector2).addClass("alert-danger");
                 $(selector3).text("Offline");
                 $(selector3).addClass("alert-danger");
-                console.log(selectedCar.regNr + " är Offline!");
+                console.log(selectedCar.regNr + " is Offline!");
             }
             if (document.getElementById("All") !== null) {
                 doFiltering();
