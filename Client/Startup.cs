@@ -17,13 +17,11 @@ namespace Client
 {
 	public class Startup
 	{
-		public Startup(IHostingEnvironment env)
+		public Startup(IConfiguration configuration)
 		{
-			var builder = new ConfigurationBuilder()
-				.SetBasePath(env.ContentRootPath)
-				.AddEnvironmentVariables();
-			builder.Build();
+			Configuration = configuration;
 		}
+		public IConfiguration Configuration { get; }
 
 		public static IEndpointInstance EndpointInstance { get; private set; }
 
