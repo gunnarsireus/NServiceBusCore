@@ -1,9 +1,9 @@
 ﻿using Shared.Models;
 using Server.DAL;
+using Microsoft.EntityFrameworkCore;
+
 namespace Server.Data
 {
-	using Microsoft.EntityFrameworkCore;
-
 	public class CarRepository : Repository<Car>, ICarRepository
 	{
 		public CarRepository(DbContext context) : base(context)

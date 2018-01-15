@@ -16,20 +16,20 @@ namespace Client.Controllers
 
 	public class CarController : Controller
 	{
-		readonly UserManager<ApplicationUser> _userManager;
-		readonly IEndpointInstance _endpoint;
+		readonly SignInManager<ApplicationUser> _signInManager;
+		readonly IEndpointInstance _endpointInstance;
 
-		public CarController(UserManager<ApplicationUser> userManager, IEndpointInstance endpoint)
+		public CarController(SignInManager<ApplicationUser> signInManager, IEndpointInstance endpointInstance)
 		{
-			_userManager = userManager;
-			_endpoint = endpoint;
+			_signInManager = signInManager;
+			_endpointInstance = endpointInstance;
 		}
 
 		[HttpGet]
 		[EnableCors("AllowAllOrigins")]
 		public async Task<IActionResult> GetAllCars()
 		{
-			var getCarsResponse = await Utils.Utils.GetCarsResponseAsync();
+			var getCarsResponse = await Utils.Utils.GetCarsResponseAsync(_endpointInstance);
 			return Json(getCarsResponse.Cars);
 		}
 
@@ -37,20 +37,20 @@ namespace Client.Controllers
 		public async Task<IActionResult> UpdateOnline([FromBody] Car car)
 		{
 			if (!ModelState.IsValid) return Json(new { success = false });
-			var getCarResponse = await Utils.Utils.GetCarResponseAsync(car.Id);
+			var getCarResponse = await Utils.Utils.GetCarResponseAsync(car.Id, _endpointInstance);
 			var oldCar = getCarResponse.Car;
 			oldCar.Online = car.Online;
-			await Utils.Utils.UpdateCarResponseAsync(oldCar);
+			await Utils.Utils.UpdateCarResponseAsync(oldCar, _endpointInstance);
 			return Json(new { success = true });
 		}
 
 		// GET: Car
 		public async Task<IActionResult> Index(string id)
 		{
+			if (!_signInManager.IsSignedIn(User)) return RedirectToAction("Index", "Home");
+			var getCarsResponse = await Utils.Utils.GetCarsResponseAsync(_endpointInstance);
 
-			var getCarsResponse = await Utils.Utils.GetCarsResponseAsync();
-
-			var getCompaniesResponse = await Utils.Utils.GetCompaniesResponseAsync();
+			var getCompaniesResponse = await Utils.Utils.GetCompaniesResponseAsync(_endpointInstance);
 
 			if (getCompaniesResponse.Companies.Any() && id == null)
 				id = getCompaniesResponse.Companies[0].Id.ToString();
@@ -93,8 +93,8 @@ namespace Client.Controllers
 		// GET: Car/Details/5
 		public async Task<IActionResult> Details(Guid id)
 		{
-			var getCarResponse = await Utils.Utils.GetCarResponseAsync(id);
-			var getCompanyResponse = await Utils.Utils.GetCompanyResponseAsync(getCarResponse.Car.CompanyId);
+			var getCarResponse = await Utils.Utils.GetCarResponseAsync(id, _endpointInstance);
+			var getCompanyResponse = await Utils.Utils.GetCompanyResponseAsync(getCarResponse.Car.CompanyId, _endpointInstance);
 			ViewBag.CompanyName = getCompanyResponse.Company.Name;
 			return View(getCarResponse.Car);
 		}
@@ -104,7 +104,7 @@ namespace Client.Controllers
 		{
 			var companyId = new Guid(id);
 			var car = new Car(companyId);
-			var getCompanyResponse = await Utils.Utils.GetCompanyResponseAsync(companyId);
+			var getCompanyResponse = await Utils.Utils.GetCompanyResponseAsync(companyId, _endpointInstance);
 			ViewBag.CompanyName = getCompanyResponse.Company.Name;
 			return View(car);
 		}
@@ -119,7 +119,7 @@ namespace Client.Controllers
 		{
 			if (!ModelState.IsValid) return View(car);
 			car.Id = Guid.NewGuid();
-			var createCarResponse = await Utils.Utils.CreateCarResponseAsync(car);
+			var createCarResponse = await Utils.Utils.CreateCarResponseAsync(car, _endpointInstance);
 
 			return RedirectToAction("Index", new { id = car.CompanyId });
 		}
@@ -127,10 +127,10 @@ namespace Client.Controllers
 		// GET: Car/Edit/5
 		public async Task<IActionResult> Edit(Guid id)
 		{
-			var getCarResponse = await Utils.Utils.GetCarResponseAsync(id);
+			var getCarResponse = await Utils.Utils.GetCarResponseAsync(id, _endpointInstance);
 			getCarResponse.Car.Disabled = true; //Prevent updates of Online/Offline while editing
-			var updateCarResponse = Utils.Utils.UpdateCarResponseAsync(getCarResponse.Car);
-			var getCompanyResponse = await Utils.Utils.GetCompanyResponseAsync(getCarResponse.Car.CompanyId);
+			var updateCarResponse = Utils.Utils.UpdateCarResponseAsync(getCarResponse.Car, _endpointInstance);
+			var getCompanyResponse = await Utils.Utils.GetCompanyResponseAsync(getCarResponse.Car.CompanyId, _endpointInstance);
 			ViewBag.CompanyName = getCompanyResponse.Company.Name;
 			return View(getCarResponse.Car);
 		}
@@ -143,11 +143,11 @@ namespace Client.Controllers
 		public async Task<IActionResult> Edit(Guid id, [Bind("Id, Online")] Car car)
 		{
 			if (!ModelState.IsValid) return View(car);
-			var oldCarResponse = await Utils.Utils.GetCarResponseAsync(id);
+			var oldCarResponse = await Utils.Utils.GetCarResponseAsync(id, _endpointInstance);
 			var oldCar = oldCarResponse.Car;
 			oldCar.Online = car.Online;
 			oldCar.Disabled = false; //Enable updates of Online/Offline when editing done
-			var updateCarResponse = Utils.Utils.UpdateCarResponseAsync(oldCar);
+			var updateCarResponse = Utils.Utils.UpdateCarResponseAsync(oldCar, _endpointInstance);
 
 			return RedirectToAction("Index", new { id = oldCar.CompanyId });
 		}
@@ -155,7 +155,7 @@ namespace Client.Controllers
 		// GET: Car/Delete/5
 		public async Task<IActionResult> Delete(Guid id)
 		{
-			var getCarResponse = await Utils.Utils.GetCarResponseAsync(id);
+			var getCarResponse = await Utils.Utils.GetCarResponseAsync(id, _endpointInstance);
 			return View(getCarResponse.Car);
 		}
 
@@ -165,20 +165,20 @@ namespace Client.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(Guid id)
 		{
-			var getCarResponse = await Utils.Utils.GetCarResponseAsync(id);
-			await Utils.Utils.DeleteCarResponseAsync(id);
+			var getCarResponse = await Utils.Utils.GetCarResponseAsync(id, _endpointInstance);
+			await Utils.Utils.DeleteCarResponseAsync(id, _endpointInstance);
 			return RedirectToAction("Index", new { id = getCarResponse.Car.CompanyId });
 		}
 
 		public async Task<bool> RegNrAvailableAsync(string regNr)
 		{
-			var getCarsResponse = await Utils.Utils.GetCarsResponseAsync();
+			var getCarsResponse = await Utils.Utils.GetCarsResponseAsync(_endpointInstance);
 			return getCarsResponse.Cars.All(c => c.RegNr != regNr);
 		}
 
 		public async Task<bool> VinAvailableAsync(string vin)
 		{
-			var getCarsResponse = await Utils.Utils.GetCarsResponseAsync();
+			var getCarsResponse = await Utils.Utils.GetCarsResponseAsync(_endpointInstance);
 			return getCarsResponse.Cars.All(c => c.VIN != vin);
 		}
 	}

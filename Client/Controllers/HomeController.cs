@@ -13,10 +13,10 @@ namespace Client.Controllers
 {
 	public class HomeController : Controller
 	{
-		readonly IEndpointInstance _endpoint;
-		public HomeController(IEndpointInstance endpoint)
+		readonly IEndpointInstance _endpointInstance;
+		public HomeController(IEndpointInstance endPointEndpointInstance)
 		{
-			_endpoint = endpoint;
+			_endpointInstance = endPointEndpointInstance;
 		}
 
 		public async Task<IActionResult> Index()
@@ -24,7 +24,7 @@ namespace Client.Controllers
 			List<Company> companies;
 			try
 			{
-				var responseTask = await Utils.Utils.GetCompaniesResponseAsync();
+				var responseTask = await Utils.Utils.GetCompaniesResponseAsync(_endpointInstance);
 				companies = responseTask.Companies;
 			}
 			catch (Exception e)
@@ -33,12 +33,12 @@ namespace Client.Controllers
 				return View("Index", new HomeViewModel(Guid.NewGuid()) { Companies = new List<Company>() });
 			}
 
-			var getCarsResponse = await Utils.Utils.GetCarsResponseAsync();
+			var getCarsResponse = await Utils.Utils.GetCarsResponseAsync(_endpointInstance);
 			var allCars = getCarsResponse.Cars.ToList();
 			foreach (var car in allCars)
 			{
 				car.Disabled = false; //Enable updates of Online/Offline
-				var updateCarResponse = Utils.Utils.UpdateCarResponseAsync(car);
+				var updateCarResponse = Utils.Utils.UpdateCarResponseAsync(car, _endpointInstance);
 			}
 
 			foreach (var company in companies)

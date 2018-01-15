@@ -9,12 +9,17 @@ using Shared.Models;
 
 namespace CarClient.Controllers
 {
+	using NServiceBus;
+
 	public class CompanyController : Controller
 	{
-		private readonly UserManager<ApplicationUser> _userManager;
-		public CompanyController(UserManager<ApplicationUser> userManager)
+		readonly SignInManager<ApplicationUser> _signInManager;
+		readonly IEndpointInstance _endpointInstance;
+
+		public CompanyController(SignInManager<ApplicationUser> signInManager, IEndpointInstance endpointInstance)
 		{
-			_userManager = userManager;
+			_signInManager = signInManager;
+			_endpointInstance = endpointInstance;
 		}
 
 
@@ -22,12 +27,13 @@ namespace CarClient.Controllers
 
 		public async Task<IActionResult> Index()
 		{
-			var getCompaniesResponse = await Client.Utils.Utils.GetCompaniesResponseAsync();
+			if (!_signInManager.IsSignedIn(User)) return RedirectToAction("Index", "Home");
+			var getCompaniesResponse = await Client.Utils.Utils.GetCompaniesResponseAsync(_endpointInstance);
 			var companies = getCompaniesResponse.Companies;
 
 			foreach (var company in companies)
 			{
-				var getCarsResponse = await Client.Utils.Utils.GetCarsResponseAsync();
+				var getCarsResponse = await Client.Utils.Utils.GetCarsResponseAsync(_endpointInstance);
 				var cars = getCarsResponse.Cars;
 				cars = cars.Where(c => c.CompanyId == company.Id).ToList();
 				company.Cars = cars;
@@ -41,7 +47,7 @@ namespace CarClient.Controllers
 		// GET: Company/Details/5
 		public async Task<IActionResult> Details(Guid id)
 		{
-			var getCompanyResponse = await Client.Utils.Utils.GetCompanyResponseAsync(id);
+			var getCompanyResponse = await Client.Utils.Utils.GetCompanyResponseAsync(id, _endpointInstance);
 			var company = getCompanyResponse.Company;
 
 			return View(company);
@@ -62,7 +68,7 @@ namespace CarClient.Controllers
 		{
 			if (!ModelState.IsValid) return View(company);
 			company.Id = Guid.NewGuid();
-			var createCompanyResponse = await Client.Utils.Utils.CreateCompanyResponseAsync(company);
+			var createCompanyResponse = await Client.Utils.Utils.CreateCompanyResponseAsync(company, _endpointInstance);
 
 			return RedirectToAction(nameof(Index));
 		}
@@ -70,7 +76,7 @@ namespace CarClient.Controllers
 		// GET: Company/Edit/5
 		public async Task<IActionResult> Edit(Guid id)
 		{
-			var getCompanyResponse = await Client.Utils.Utils.GetCompanyResponseAsync(id);
+			var getCompanyResponse = await Client.Utils.Utils.GetCompanyResponseAsync(id, _endpointInstance);
 			var company = getCompanyResponse.Company;
 			return View(company);
 		}
@@ -83,12 +89,12 @@ namespace CarClient.Controllers
 		public async Task<IActionResult> Edit(Guid id, [Bind("Id,CreationTime, Name, Address")] Company company)
 		{
 			if (!ModelState.IsValid) return View(company);
-			var getCompanyResponse = await Client.Utils.Utils.GetCompanyResponseAsync(id);
+			var getCompanyResponse = await Client.Utils.Utils.GetCompanyResponseAsync(id, _endpointInstance);
 			var oldCompany = getCompanyResponse.Company;
 
 			oldCompany.Name = company.Name;
 			oldCompany.Address = company.Address;
-			var updateCompanyResponse = await Client.Utils.Utils.UpdateCompanyResponseAsync(company);
+			var updateCompanyResponse = await Client.Utils.Utils.UpdateCompanyResponseAsync(company, _endpointInstance);
 
 			return RedirectToAction(nameof(Index));
 		}
@@ -96,7 +102,7 @@ namespace CarClient.Controllers
 		// GET: Company/Delete/5
 		public async Task<IActionResult> Delete(Guid id)
 		{
-			var getCompanyResponse = await Client.Utils.Utils.GetCompanyResponseAsync(id);
+			var getCompanyResponse = await Client.Utils.Utils.GetCompanyResponseAsync(id, _endpointInstance);
 			var company = getCompanyResponse.Company;
 			return View(company);
 		}
@@ -107,7 +113,7 @@ namespace CarClient.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(Guid id)
 		{
-			var deleteCompanyResponse = await Client.Utils.Utils.DeleteCompanyResponseAsync(id);
+			var deleteCompanyResponse = await Client.Utils.Utils.DeleteCompanyResponseAsync(id, _endpointInstance);
 			return RedirectToAction(nameof(Index));
 		}
 	}

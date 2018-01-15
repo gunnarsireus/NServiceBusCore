@@ -3,9 +3,11 @@ using Shared.Response;
 
 namespace Client.Services
 {
+	using NServiceBus;
+
 	public interface IAspNetDbLocation
 	{
-		Task<GetAspNetDbResponse> GetAspNetDbAsync();
+		Task<GetAspNetDbResponse> GetAspNetDbAsync(IEndpointInstance endpointInstance);
 
 	}
 }

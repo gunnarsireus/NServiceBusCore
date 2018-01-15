@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Client.Models;
 
-namespace Client.Data
+namespace Client.DAL
 {
 	using Client.Models;
 
