@@ -35,7 +35,7 @@ namespace Server
 
 			var builder = new ContainerBuilder();
 			builder.Populate(services);
-			builder.RegisterType<DbContextOptionsBuilder<CarApiContext>>().AsSelf().WithParameter("dbContextOptionsBuilder", dbContextOptionsBuilder).InstancePerLifetimeScope();
+			builder.RegisterType<DbContextOptionsBuilder<CarApiContext>>().AsSelf().WithParameter("dbContextOptionsBuilder", dbContextOptionsBuilder);
 			builder.RegisterType<CreateCarRequestHandler>().AsSelf().WithParameter("dbContextOptionsBuilder", dbContextOptionsBuilder);
 			builder.RegisterType<CreateCompanyRequestHandler>().AsSelf().WithParameter("dbContextOptionsBuilder", dbContextOptionsBuilder);
 			builder.RegisterType<DeleteCarRequestHandler>().AsSelf().WithParameter("dbContextOptionsBuilder", dbContextOptionsBuilder);
