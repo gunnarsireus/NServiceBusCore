@@ -4,16 +4,17 @@ using NServiceBus.Logging;
 using Shared.Requests;
 using Shared.Response;
 using Server.DAL;
+using Microsoft.EntityFrameworkCore;
+using Server.Data;
 
 namespace Server.Requesthandler
 {
 	public class CreateCompanyRequestHandler : IHandleMessages<CreateCompanyRequest>
 	{
-		readonly CarDataAccess _carDataAccess;
-
-		public CreateCompanyRequestHandler()
+		readonly DbContextOptionsBuilder<CarApiContext> _dbContextOptionsBuilder;
+		public CreateCompanyRequestHandler(DbContextOptionsBuilder<CarApiContext> dbContextOptionsBuilder)
 		{
-			_carDataAccess = new CarDataAccess();
+			_dbContextOptionsBuilder = dbContextOptionsBuilder;
 		}
 
 		static ILog log = LogManager.GetLogger<CreateCompanyRequest>();
@@ -22,16 +23,19 @@ namespace Server.Requesthandler
 		{
 			log.Info("Received CreateCompanyRequest");
 
+			using (var _unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
+			{
+				_unitOfWork.Companies.Add(message.Company);
+				_unitOfWork.Complete();
+			}
+
 			var response = new CreateCompanyResponse()
 			{
 				Company = message.Company
 			};
 
-			_carDataAccess.AddCompany(message.Company);
-
 			var reply = context.Reply(response);
 			return reply;
-
 		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CarAPI.Data
+namespace Server.Data
 {
 	internal interface ICarUnitOfWork: IDisposable
     {

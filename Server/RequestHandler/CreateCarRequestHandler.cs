@@ -4,15 +4,17 @@ using NServiceBus;
 using NServiceBus.Logging;
 using Shared.Response;
 using Server.DAL;
+using Server.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Server.Requesthandler
 {
 	public class CreateCarRequestHandler : IHandleMessages<CreateCarRequest>
 	{
-		readonly CarDataAccess _carDataAccess;
-		public CreateCarRequestHandler()
+		readonly DbContextOptionsBuilder<CarApiContext> _dbContextOptionsBuilder;
+		public CreateCarRequestHandler(DbContextOptionsBuilder<CarApiContext> dbContextOptionsBuilder)
 		{
-			_carDataAccess = new CarDataAccess();
+			_dbContextOptionsBuilder = dbContextOptionsBuilder;
 		}
 
 		static ILog log = LogManager.GetLogger<CreateCarRequestHandler>();
@@ -26,7 +28,11 @@ namespace Server.Requesthandler
 				Car = message.Car
 			};
 
-			_carDataAccess.AddCar(message.Car);
+			using (var _unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
+			{
+				_unitOfWork.Cars.Add(message.Car);
+				_unitOfWork.Complete();
+			}
 
 			var reply = context.Reply(response);
 			return reply;

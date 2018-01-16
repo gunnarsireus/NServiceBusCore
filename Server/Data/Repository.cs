@@ -22,7 +22,7 @@ namespace Server.Data
 
 	    public void Update(TEntity entity)
 	    {
-		    Context.Update(entity);
+			Context.Update(entity);
 	    }
 
 		public void AddRange(IEnumerable<TEntity> entities)

@@ -26,7 +26,7 @@ namespace Shared.Models
 
 		[Display(Name = "VIN (VehicleID)")]
 		[RegularExpression(@"^[A-Z0-9]{6}\d{11}$", ErrorMessage = "{0} denoted as X1Y2Z300001239876")]
-		[Remote("VinAvailableAsync", "Car", ErrorMessage = "VIN upptaget")]
+		[Remote("VinAvailableAsync", "Car", ErrorMessage = "VIN already taken")]
 		public string VIN { get; set; }
 
 		[Display(Name = "Reg. Nbr.")]

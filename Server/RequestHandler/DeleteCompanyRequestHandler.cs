@@ -5,16 +5,17 @@ using Shared.Requests;
 using System;
 using Shared.Response;
 using Server.DAL;
+using Microsoft.EntityFrameworkCore;
+using Server.Data;
 
 namespace Server.Requesthandler
 {
 	public class DeleteCompanyRequestHandler : IHandleMessages<DeleteCompanyRequest>
 	{
-		readonly CarDataAccess _carDataAccess;
-
-		public DeleteCompanyRequestHandler()
+		readonly DbContextOptionsBuilder<CarApiContext> _dbContextOptionsBuilder;
+		public DeleteCompanyRequestHandler(DbContextOptionsBuilder<CarApiContext> dbContextOptionsBuilder)
 		{
-			_carDataAccess = new CarDataAccess();
+			_dbContextOptionsBuilder = dbContextOptionsBuilder;
 		}
 
 		static ILog log = LogManager.GetLogger<GetCompanyRequest>();
@@ -22,8 +23,11 @@ namespace Server.Requesthandler
 		public Task Handle(DeleteCompanyRequest message, IMessageHandlerContext context)
 		{
 			log.Info("Received DeleteCompanyRequest");
-			_carDataAccess.DeleteCompany(message.CompanyId);
-
+			using (var _unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
+			{
+				_unitOfWork.Companies.Remove(_unitOfWork.Companies.Get(message.CompanyId));
+				_unitOfWork.Complete();
+			}
 			var response = new DeleteCompanyResponse()
 			{
 				DataId = Guid.NewGuid()

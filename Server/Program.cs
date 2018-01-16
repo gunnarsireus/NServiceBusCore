@@ -2,8 +2,11 @@
 using System.Globalization;
 using Microsoft.AspNetCore;
 using Server.Extensions;
+using System.IO;
+
 namespace Server
 {
+
 	internal class Program
 	{
 		public static void Main(string[] args)
@@ -14,7 +17,11 @@ namespace Server
 
 		static IWebHost BuildWebHost(string[] args) =>
 			WebHost.CreateDefaultBuilder(args)
-				.UseSqLiteDb("DataSource=App_Data/Car.db")
+				.UseKestrel()
+				.UseContentRoot(Directory.GetCurrentDirectory())
+				.UseIISIntegration()
+				.UseStartup<Startup>()
+				.InitSqLiteDb("DataSource=App_Data/Car.db")
 				.Build();
 	}
 

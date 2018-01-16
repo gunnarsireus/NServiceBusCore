@@ -5,31 +5,34 @@ using Shared.Requests;
 using System;
 using Shared.Response;
 using Server.DAL;
+using Microsoft.EntityFrameworkCore;
+using Server.Data;
 
 namespace Server.Requesthandler
 {
 	public class UpdateCompanyRequestHandler : IHandleMessages<UpdateCompanyRequest>
 	{
-		readonly CarDataAccess _carDataAccess;
-		public UpdateCompanyRequestHandler()
+		readonly DbContextOptionsBuilder<CarApiContext> _dbContextOptionsBuilder;
+		public UpdateCompanyRequestHandler(DbContextOptionsBuilder<CarApiContext> dbContextOptionsBuilder)
 		{
-			_carDataAccess = new CarDataAccess();
+			_dbContextOptionsBuilder = dbContextOptionsBuilder;
 		}
-
 		static ILog log = LogManager.GetLogger<UpdateCompanyRequest>();
 
 		public Task Handle(UpdateCompanyRequest message, IMessageHandlerContext context)
 		{
 			log.Info("Received UpdateCompanyRequest");
-
-			_carDataAccess.UpdateCompany(message.Company);
-
+			using (var _unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
+			{
+				_unitOfWork.Companies.Update(message.Company);
+				_unitOfWork.Complete();
+			}
 			var response = new UpdateCompanyResponse()
 			{
 				DataId = Guid.NewGuid(),
 				Company = message.Company
 			};
-	
+
 			var reply = context.Reply(response);
 			return reply;
 

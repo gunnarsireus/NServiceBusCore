@@ -6,18 +6,19 @@ using System;
 using Shared.Response;
 using System.Linq;
 using Server.DAL;
-
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Server.Data;
+using Shared.Models;
 namespace Server.Requesthandler
 {
 	public class GetCompaniesRequestHandler : IHandleMessages<GetCompaniesRequest>
 	{
-		readonly CarDataAccess _carDataAccess;
-
-		public GetCompaniesRequestHandler()
+		readonly DbContextOptionsBuilder<CarApiContext> _dbContextOptionsBuilder;
+		public GetCompaniesRequestHandler(DbContextOptionsBuilder<CarApiContext> dbContextOptionsBuilder)
 		{
-			_carDataAccess = new CarDataAccess();
+			_dbContextOptionsBuilder = dbContextOptionsBuilder;
 		}
-
 
 		static ILog log = LogManager.GetLogger<GetCompaniesRequest>();
 
@@ -25,10 +26,16 @@ namespace Server.Requesthandler
 		{
 			log.Info("Received GetCompaniesRequest");
 
+			List<Company> companies;
+			using (var _unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
+			{
+				companies = _unitOfWork.Companies.GetAll().ToList();
+			}
+
 			var response = new GetCompaniesResponse
 			{
 				DataId = Guid.NewGuid(),
-				Companies = _carDataAccess.GetCompanies().ToList()
+				Companies = companies
 			};
 
 			var reply = context.Reply(response);

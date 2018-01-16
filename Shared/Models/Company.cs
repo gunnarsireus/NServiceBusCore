@@ -1,11 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Collections.Generic;
 
 namespace Shared.Models
 {
-	using System.Collections.Generic;
-
 	public class Company
 	{
 		public Company()
