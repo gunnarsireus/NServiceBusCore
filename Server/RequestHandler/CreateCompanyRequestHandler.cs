@@ -23,10 +23,10 @@ namespace Server.Requesthandler
 		{
 			log.Info("Received CreateCompanyRequest");
 
-			using (var _unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
+			using (var unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
 			{
-				_unitOfWork.Companies.Add(message.Company);
-				_unitOfWork.Complete();
+				unitOfWork.Companies.Add(message.Company);
+				unitOfWork.Complete();
 			}
 
 			var response = new CreateCompanyResponse()

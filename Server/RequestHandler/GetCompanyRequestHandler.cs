@@ -26,9 +26,9 @@ namespace Server.Requesthandler
 			log.Info("Received GetCompanyRequest");
 
 			Company company;
-			using (var _unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
+			using (var unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
 			{
-				company = _unitOfWork.Companies.Get(message.CompanyId);
+				company = unitOfWork.Companies.Get(message.CompanyId);
 			}
 			var response = new GetCompanyResponse(message.CompanyId)
 			{

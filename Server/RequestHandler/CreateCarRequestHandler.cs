@@ -28,10 +28,10 @@ namespace Server.Requesthandler
 				Car = message.Car
 			};
 
-			using (var _unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
+			using (var unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
 			{
-				_unitOfWork.Cars.Add(message.Car);
-				_unitOfWork.Complete();
+				unitOfWork.Cars.Add(message.Car);
+				unitOfWork.Complete();
 			}
 
 			var reply = context.Reply(response);

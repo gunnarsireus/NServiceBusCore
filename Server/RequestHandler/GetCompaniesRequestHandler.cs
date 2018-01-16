@@ -27,9 +27,9 @@ namespace Server.Requesthandler
 			log.Info("Received GetCompaniesRequest");
 
 			List<Company> companies;
-			using (var _unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
+			using (var unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
 			{
-				companies = _unitOfWork.Companies.GetAll().ToList();
+				companies = unitOfWork.Companies.GetAll().ToList();
 			}
 
 			var response = new GetCompaniesResponse

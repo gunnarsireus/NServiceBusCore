@@ -23,10 +23,10 @@ namespace Server.Requesthandler
 		public Task Handle(DeleteCarRequest message, IMessageHandlerContext context)
 		{
 			log.Info("Received DeleteCarRequest.");
-			using (var _unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
+			using (var unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
 			{
-				_unitOfWork.Cars.Remove(_unitOfWork.Cars.Get(message.CarId));
-				_unitOfWork.Complete();
+				unitOfWork.Cars.Remove(unitOfWork.Cars.Get(message.CarId));
+				unitOfWork.Complete();
 			}
 			var response = new DeleteCarResponse()
 			{

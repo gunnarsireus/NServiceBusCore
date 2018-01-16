@@ -22,10 +22,10 @@ namespace Server.Requesthandler
 		public Task Handle(UpdateCompanyRequest message, IMessageHandlerContext context)
 		{
 			log.Info("Received UpdateCompanyRequest");
-			using (var _unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
+			using (var unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
 			{
-				_unitOfWork.Companies.Update(message.Company);
-				_unitOfWork.Complete();
+				unitOfWork.Companies.Update(message.Company);
+				unitOfWork.Complete();
 			}
 			var response = new UpdateCompanyResponse()
 			{

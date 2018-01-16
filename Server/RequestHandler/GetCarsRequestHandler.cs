@@ -26,9 +26,9 @@ namespace Server.Requesthandler
 		{
 			log.Info("Received GetCarsRequest.");
 			List<Car> cars;
-			using (var _unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
+			using (var unitOfWork = new CarUnitOfWork(new CarApiContext(_dbContextOptionsBuilder.Options)))
 			{
-				cars = _unitOfWork.Cars.GetAll().ToList();
+				cars = unitOfWork.Cars.GetAll().ToList();
 			}
 			var response = new GetCarsResponse()
 			{
