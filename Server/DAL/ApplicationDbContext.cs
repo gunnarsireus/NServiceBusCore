@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Shared.Models;
 
-namespace Client.DAL
+namespace Server.DAL
 {
-	using Client.Models;
 
 	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

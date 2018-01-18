@@ -33,6 +33,11 @@ namespace Server
 			var dbContextOptionsBuilder = new DbContextOptionsBuilder<CarApiContext>();
 			dbContextOptionsBuilder.UseSqlite("DataSource=App_Data/Car.db");
 
+			services.AddDbContext<CarApiContext>(options =>
+				options.UseSqlServer(Configuration.GetConnectionString("CarApiContext")));
+			services.AddDbContext<ApplicationDbContext>(options =>
+				options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext")));
+
 			var builder = new ContainerBuilder();
 			builder.Populate(services);
 			builder.RegisterType<DbContextOptionsBuilder<CarApiContext>>().AsSelf().WithParameter("dbContextOptionsBuilder", dbContextOptionsBuilder);

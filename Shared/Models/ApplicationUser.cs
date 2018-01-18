@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-namespace Client.Models
+
+namespace Shared.Models
 {
 
 	// Add profile data for application users by adding properties to the ApplicationUser class
